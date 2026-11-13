@@ -20,7 +20,7 @@ const config = {
     username: 'LobbyGuard', // Change to your desired bot name
     auth: 'offline',
     password: '',
-    authmePassword: 'YourBotPassword123' // Change to your AuthMe password
+    authmePassword: 'swagdude' // Change to your AuthMe password
   },
   serverCommands: {
     enabled: false, // Disabled since you no longer have a Velocity /server command

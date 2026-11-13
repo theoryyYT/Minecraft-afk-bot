@@ -1,23 +1,31 @@
+const http = require('http');
 const mineflayer = require('mineflayer');
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder');
+
+// Keep-alive web server so Render's free tier & UptimeRobot stay active
+const port = process.env.PORT || 3000;
+http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('AFK Bot is online!');
+}).listen(port, () => console.log(`Web server listening on port ${port}`));
 
 // Configuration - Edit these values for your server
 const config = {
   server: {
-    host: 'localhost', // Change to your server IP
-    port: 25565,
-    version: '1.20.4' // Change to your server version
+    host: '51.81.221.196', // Your server IP
+    port: 15360,           // Your server port
+    version: '1.21.4'      // Works with your ViaVersion plugin
   },
   bot: {
-    username: 'AFKBot', // Change to your desired bot name
-    auth: 'offline', // 'offline', 'microsoft', or 'mojang'
-    password: '', // Minecraft account password (if using premium auth)
-    authmePassword: 'change_this_password' // AuthMe password for /register and /login
+    username: 'LobbyGuard', // Change to your desired bot name
+    auth: 'offline',
+    password: '',
+    authmePassword: 'YourBotPassword123' // Change to your AuthMe password
   },
   serverCommands: {
-    enabled: true,
-    joinServer: '/server survival', // Command to join specific server AFTER AuthMe
-    delay: 3000 // Wait 3 seconds after AuthMe before sending server command
+    enabled: false, // Disabled since you no longer have a Velocity /server command
+    joinServer: '/server survival',
+    delay: 3000
   },
   features: {
     autoReconnect: {
@@ -25,9 +33,9 @@ const config = {
       delay: 5000
     },
     movement: {
-      enabled: true,
+      enabled: false, // Disabled so the bot stays safely at spawn without walking into /transfer portals
       coordinates: {
-        x: 0, // Change to your desired AFK coordinates
+        x: 0,
         y: 64,
         z: 0
       }
@@ -41,7 +49,7 @@ const config = {
     },
     chatMessages: {
       enabled: false,
-      interval: 300000, // 5 minutes
+      interval: 300000,
       messages: [
         'Still here!',
         'AFK farming...',
@@ -53,6 +61,7 @@ const config = {
     }
   }
 };
+
 
 let bot;
 let isAuthenticated = false;
